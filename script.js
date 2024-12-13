@@ -1,42 +1,21 @@
 const data = {
-    name: "Tier 0 Ship",
+    name: "Fly",
+    image: "images/Fly.png",
     children: [
         {
-            name: "Tier 1 Ship 1",
+            name: "Delta-Fighter",
+            image: "images/Delta-Fighter.png",
             children: [
-                {
-                    name: "Tier 2 Ship 1",
-                    children: [
-                        { name: "Tier 3 Ship 1" },
-                        { name: "Tier 3 Ship 2" }
-                    ]
-                },
-                {
-                    name: "Tier 2 Ship 2",
-                    children: [
-                        { name: "Tier 3 Ship 3" },
-                        { name: "Tier 3 Ship 4" }
-                    ]
-                }
+                { name: "Pulse-Fighter", image: "images/Pulse-Fighter.png" },
+                { name: "Side-Fighter", image: "images/Side-Fighter.png" }
             ]
         },
         {
-            name: "Tier 1 Ship 2",
+            name: "Trident",
+            image: "images/Trident.png",
             children: [
-                {
-                    name: "Tier 2 Ship 3",
-                    children: [
-                        { name: "Tier 3 Ship 5" },
-                        { name: "Tier 3 Ship 6" }
-                    ]
-                },
-                {
-                    name: "Tier 2 Ship 4",
-                    children: [
-                        { name: "Tier 3 Ship 7" },
-                        { name: "Tier 3 Ship 8" }
-                    ]
-                }
+                { name: "Shadow X-1", image: "images/Shadow X-1.png" },
+                { name: "Y-Defender", image: "images/Y-Defender.png" }
             ]
         }
     ]
@@ -49,8 +28,6 @@ const height = +svg.attr("height");
 
 // Create tree layout and define dimensions
 const treeLayout = d3.tree().size([width, height - 100]);
-
-// Convert hierarchical data into a structure D3 can use
 const root = d3.hierarchy(data);
 
 // Compute positions for nodes and links
@@ -61,7 +38,7 @@ root.descendants().forEach(d => {
     d.y = height - d.y; // Flip the y-coordinate
 });
 
-// Draw links (lines connecting nodes)
+// Draw links
 svg.append("g")
     .selectAll("path")
     .data(root.links())
@@ -72,7 +49,7 @@ svg.append("g")
         .x(d => d.x)
         .y(d => d.y));
 
-// Draw nodes (circles)
+// Draw nodes with images
 const nodes = svg.append("g")
     .selectAll("g")
     .data(root.descendants())
@@ -81,10 +58,14 @@ const nodes = svg.append("g")
     .attr("transform", d => `translate(${d.x},${d.y})`)
     .attr("class", "node");
 
-nodes.append("circle")
-    .attr("r", 8);
+nodes.append("image")
+    .attr("xlink:href", d => d.data.image) // Use image path from data
+    .attr("width", 40)
+    .attr("height", 40)
+    .attr("x", -20)
+    .attr("y", -20);
 
 nodes.append("text")
-    .attr("dy", -15)
+    .attr("dy", 50)
     .attr("class", "label")
     .text(d => d.data.name);
