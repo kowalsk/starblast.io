@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+svg {
+    border: 1px solid #ccc;
+}
+.node circle {
+    fill: steelblue;
+    stroke: black;
+    stroke-width: 2px;
+}
+.link {
+    fill: none;
+    stroke: gray;
+    stroke-width: 1.5px;
+}
+.label {
+    font-size: 12px;
+    text-anchor: middle;
+    fill: black;
+}
